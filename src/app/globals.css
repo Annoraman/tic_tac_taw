@@ -33,3 +33,13 @@
 .x{
   color: red;
 }
+
+.message{
+  width: 100%;
+  height: 100px;
+  background-color: sandybrown;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

@@ -34,12 +34,12 @@ export default function Home() {
   
   return (
     <main className="container">
-       <div>{winning_message?<div> {winning_message} </div>:<div> Its Now {go} Turn </div>} 
-       <div><button onClick={(e)=>setCell(["","","V","","","","","",""])}>reset</button></div> 
+       <div className="message">{winning_message?<div> {winning_message} </div>:<div> Its Now {go} Turn </div>} 
+       
        </div>
       <div className="game-border">
         {cells.map((c, index)=>(
-          <Cell id={index} go={go} setGo={setGo} key={index} cells={cells} setCell={setCell}/>
+          <Cell id={index} go={go} setGo={setGo} key={index} cells={cells} setCell={setCell} W_message={winning_message}/>
         ))}
       </div>
     </main>

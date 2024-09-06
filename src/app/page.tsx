@@ -1,94 +1,46 @@
-import Image from "next/image";
-import styles from "./page.module.css";
+"use client"
+import Image from "next/image"
+import { useEffect, useState } from "react";
+import Cell from "./component/cell";
 
+const winnerChecks = [
+  [0,1,2],
+  [3,4,5],
+  [6,7,8],
+  [0,3,6],
+  [1,4,7],
+  [2,5,8],
+  [0,4,8],
+  [2,4,6]
+];
 export default function Home() {
+  const [cells,setCell]=useState(["","","","","","","","",""]);
+  const [go,setGo]= useState("O");
+  const  [winning_message,setWinning_message] = useState("")
+ 
+  useEffect(()=>{
+    winnerChecks.forEach((winnerCheck) =>{
+    const x_luck = winnerCheck.every((cell) => cells[cell]==="X");
+    const O_luck = winnerCheck.every((cell) => cells[cell]==="O");
+    
+    if (x_luck) {
+      setWinning_message("THE PLAYER X IS WINNING 🏆 ");
+      } 
+    else if(O_luck) { 
+      setWinning_message("THE PLAYER O IS WINNING 🏆 ");
+      }
+    } );
+  },[cells])
+  
   return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>src/app/page.tsx</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{" "}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
-
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
-
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
-
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore starter templates for Next.js.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
+    <main className="container">
+       <div>{winning_message?<div> {winning_message} </div>:<div> Its Now {go} Turn </div>} 
+       <div><button onClick={(e)=>setCell(["","","V","","","","","",""])}>reset</button></div> 
+       </div>
+      <div className="game-border">
+        {cells.map((c, index)=>(
+          <Cell id={index} go={go} setGo={setGo} key={index} cells={cells} setCell={setCell}/>
+        ))}
       </div>
     </main>
   );
